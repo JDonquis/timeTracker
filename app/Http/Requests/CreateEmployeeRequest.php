@@ -28,8 +28,8 @@ class CreateEmployeeRequest extends FormRequest
             'DNI' => ['required','string','max:50','unique:users,DNI'],
             'phone_number' => ['required','string','max:255'],
             'email' => ['required','string','max:255','email'],
-            'department' => ['required'],
-            'position' => ['required'],
+            'department' => ['required', 'integer', 'exists:departments,id'],
+            'position' => ['required', 'integer', 'exists:positions,id'],
 
         ];
     }

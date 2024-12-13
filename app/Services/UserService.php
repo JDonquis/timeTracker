@@ -64,18 +64,30 @@ class UserService
 
     }
 
-    // public function deleteUser($usuario)
-    // {   
-    //     $authUserId = auth()->id();
-    //     $usuario->id == $authUserId ? throw new Exception("No puedes eliminar tu propio usuario", 401) : null;
+    public function deleteUser($user)
+    {   
+        
+        $user->DNI = $this->findDNIWhenDelete($user);
+        $user->status = 2;
 
-    //     $usuario->specialties()->detach();
-    //     $usuario->roles()->detach();
+        $user->save();
 
-    //     $usuario->delete();
+        return 0;
+    }
 
-    //     return 0;
-    // }
+    private function findDNIWhenDelete($user)
+    {
+        $baseDNI = $user->DNI;
+        $counter = 1;
+        $searchDNI = "$baseDNI-$counter";
+
+        while (User::where('DNI', $searchDNI)->exists()) {
+            $counter++;
+            $searchDNI = "{$baseDNI}-{$counter}";
+        }
+
+        return $searchDNI;
+    }
 
     // public function changePassword($data){
     //     $user = auth()->user();

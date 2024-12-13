@@ -64,7 +64,7 @@
 
                                                         <div class="nftmax__item-form--group">
                                                             <label class="nftmax__item-label">Department </label>
-                                                            <select class="form-select input-select-custom" name="department" aria-label="Department select">
+                                                            <select class="form-select input-select-custom" name="department" required aria-label="Department select">
                                                                 <option selected>Assign department</option>
                                                                 @foreach ($departments as $department )                                                                    
                                                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -74,7 +74,7 @@
 
                                                         <div class="nftmax__item-form--group">
                                                             <label class="nftmax__item-label">Position </label>
-                                                            <select class="form-select input-select-custom" name="position" aria-label="Position select">
+                                                            <select class="form-select input-select-custom" name="position" required aria-label="Position select">
                                                                 <option selected>Assign position</option>
                                                                 @foreach ($positions as $position )                                                                    
                                                                     <option value="{{ $position->id }}">{{ $position->name }}</option>

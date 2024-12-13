@@ -82,6 +82,33 @@ class EmployeeService
 
     }
 
+    public function deleteEmployee($employee){
+
+        $employee->load('user');
+        $employee->status = 2;
+        $employee->user->status = 2;
+        $employee->user->DNI = $this->findDNIWhenDelete($employee);
+        
+        
+        
+        $employee->save();
+        $employee->user->save();
+    }
+
+    private function findDNIWhenDelete($employee)
+    {
+        $baseDNI = $employee->user->DNI;
+        $counter = 1;
+        $searchDNI = "$baseDNI-$counter";
+
+        while (User::where('DNI', $searchDNI)->exists()) {
+            $counter++;
+            $searchDNI = "{$baseDNI}-{$counter}";
+        }
+
+        return $searchDNI;
+    }
+
     // public function deleteUser($usuario)
     // {   
     //     $authUserId = auth()->id();

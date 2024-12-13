@@ -96,9 +96,9 @@ class UserController extends Controller
         DB::beginTransaction();
         
         try {
-        
-            $usuario->status = 2;
-            $usuario->save();
+            
+            $userService = new UserService();
+            $userService->deleteUser($usuario);
 
             DB::commit();
 

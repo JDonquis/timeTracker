@@ -38,11 +38,12 @@ class EmployeeController extends Controller
     public function store(CreateEmployeeRequest $request)
     {
         DB::beginTransaction();
+
         
         try {
         
             $employeeService = new EmployeeService();
-            $newEmployee = $employeeService->createEmployee($request->all());
+            $employeeService->createEmployee($request->all());
 
             DB::commit();
             return redirect('dashboard/employees')->with(['success' => 'Employee created successfully']);
@@ -100,12 +101,8 @@ class EmployeeController extends Controller
         
         try {
             
-            $employee->load('user');
-            $employee->status = 2;
-            $employee->user->status = 2;
-            
-            $employee->save();
-            $employee->user->save();
+            $employeeService = new EmployeeService();
+            $employeeService->deleteEmployee($employee);
 
             DB::commit();
 
