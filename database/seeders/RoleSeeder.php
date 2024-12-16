@@ -47,6 +47,7 @@ class RoleSeeder extends Seeder
         $readTimeTrackerPermission = Permission::create(['name' => 'read-time_tracker']);
         $createTimeTrackerPermission = Permission::create(['name' => 'create-time_tracker']);
         $updateTimeTrackerPermission = Permission::create(['name' => 'update-time_tracker']);
+        $editTimeTrackerPermission = Permission::create(['name' => 'edit-time_tracker']);
         $deleteTimeTrackerPermission = Permission::create(['name' => 'delete-time_tracker']);
 
 
@@ -57,7 +58,7 @@ class RoleSeeder extends Seeder
             $readEmployeesPermission, $createEmployeesPermission, $updateEmployeesPermission, $deleteEmployeesPermission,
             $readDepartmentsPermission, $createDepartmentsPermission, $updateDepartmentsPermission, $deleteDepartmentsPermission,
             $readPositionsPermission, $createPositionsPermission, $updatePositionsPermission, $deletePositionsPermission,
-            $readTimeTrackerPermission, 
+            $readTimeTrackerPermission, $editTimeTrackerPermission, 
             $readTypeHourWorkedPermission, $createTypeHourWorkedPermission, $updateTypeHourWorkedPermission, $deleteTypeHourWorkedPermission,
         
         ];
