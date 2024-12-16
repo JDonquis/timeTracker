@@ -129,7 +129,9 @@
         
         <div class="nftmax__item-button--group">
             <a href="{{ route('time_tracker.index') }}" class="nftmax__item-button--single nftmax__item-button--cancel">Cancel</a>
+            @can('update-time_tracker')
             <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius nftmax-item__btn" id="btn-groups" type="submit">Update Now</button>
+            @endcan
         </div>
 
         <div class="nftmax-ptabs__social mt-3">
@@ -141,8 +143,9 @@
                     <p class="nftmax__item-fee-text">Delete this register forever </p>
                 </div>
                
-                
+            @can('delete-time_tracker')
                 <a href="#" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $timeTracker->id }}').submit();" class="nftmax__item-button--single nftmax__item-button--cancel align-self-end">Delete</a>
+            @endcan
             </div>
         </div>
 

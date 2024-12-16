@@ -65,7 +65,7 @@ class RoleSeeder extends Seeder
 
         // For now none
         $employeePermissions = [
-            $readTimeTrackerPermission, $createTimeTrackerPermission, $updateTimeTrackerPermission, $deleteTimeTrackerPermission,
+            $readTimeTrackerPermission, $createTimeTrackerPermission, $editTimeTrackerPermission, $updateTimeTrackerPermission, $deleteTimeTrackerPermission,
             
         ];
 
