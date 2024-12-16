@@ -77,11 +77,11 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function ()
     Route::delete('/type-hours/{typeHour}', [TypeHourController::class, 'destroy'])->middleware('role_or_permission:admin|delete-type_hours')->name('type_hours.destroy');
 
     Route::get('/time-tracker', [TimeTrackerController::class, 'index'])->middleware('role_or_permission:admin|employee|read-time_tracker')->name('time_tracker.index');
-    Route::get('/time-tracker/create', [TimeTrackerController::class, 'create'])->middleware('role_or_permission:admin|employee|create-time_tracker')->name('time_tracker.create');
-    Route::post('/time-tracker', [TimeTrackerController::class, 'store'])->middleware('role_or_permission:admin|employee|create-time_tracker')->name('time_tracker.store');
-    Route::get('/time-tracker/{timeTracker}/edit', [TimeTrackerController::class, 'edit'])->middleware('role_or_permission:admin|employee|update-time_tracker')->name('time_tracker.edit');
-    Route::put('/time-tracker/{timeTracker}', [TimeTrackerController::class, 'update'])->middleware('role_or_permission:admin|employee|update-time_tracker')->name('time_tracker.update');
-    Route::delete('/time-tracker/{timeTracker}', [TimeTrackerController::class, 'destroy'])->middleware('role_or_permission:admin|employee|delete-time_tracker')->name('time_tracker.destroy');
+    Route::get('/time-tracker/create', [TimeTrackerController::class, 'create'])->middleware('role_or_permission:employee|create-time_tracker')->name('time_tracker.create');
+    Route::post('/time-tracker', [TimeTrackerController::class, 'store'])->middleware('role_or_permission:employee|create-time_tracker')->name('time_tracker.store');
+    Route::get('/time-tracker/{timeTracker}/edit', [TimeTrackerController::class, 'edit'])->middleware('role_or_permission:employee|update-time_tracker')->name('time_tracker.edit');
+    Route::put('/time-tracker/{timeTracker}', [TimeTrackerController::class, 'update'])->middleware('role_or_permission:employee|update-time_tracker')->name('time_tracker.update');
+    Route::delete('/time-tracker/{timeTracker}', [TimeTrackerController::class, 'destroy'])->middleware('role_or_permission:employee|delete-time_tracker')->name('time_tracker.destroy');
 
 
     
