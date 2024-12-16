@@ -28,8 +28,9 @@
         <input type="date" id="first-date" name="first_date" value="{{ session('first_date', $timeTracker->start->format('Y-m-d')) }}" required>
         <label for="">To:</label>
         <input type="date" id="second-date" name="second_date" value="{{ session('second_date', $timeTracker->end->format('Y-m-d')) }}" required>
-        
-        <button class="btn btn-primary" type="button" id="generate-table-btn">Generate</button>
+        @can('update-time_tracker')
+            <button class="btn btn-primary" type="button" id="generate-table-btn">Generate</button>
+        @endcan
 
         <table>
             <!-- NFTMax Table Head -->
