@@ -134,6 +134,7 @@
             @endcan
         </div>
 
+        @can('delete-time_tracker')
         <div class="nftmax-ptabs__social mt-3">
             <h4 class="nftmax-ptabs__accounts-heading text-danger">Danger Zone </h4>
             
@@ -143,12 +144,12 @@
                     <p class="nftmax__item-fee-text">Delete this register forever </p>
                 </div>
                
-            @can('delete-time_tracker')
+            
                 <a href="#" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $timeTracker->id }}').submit();" class="nftmax__item-button--single nftmax__item-button--cancel align-self-end">Delete</a>
-            @endcan
+            
             </div>
         </div>
-
+        @endcan
     </div>
 
  
