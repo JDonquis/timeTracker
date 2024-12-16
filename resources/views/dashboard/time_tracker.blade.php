@@ -4,8 +4,9 @@
                             <div class="nftmax-table__heading">
                                 <h3 class="nftmax-table__title mb-0">Time tracker <span class="nftmax-table__badge">{{ count($registers) }}</span></h3>
                                 <ul  class="nav nav-tabs  nftmax-dropdown__list" id="nav-tab" role="tablist">
+                                    @can('create-time_tracker')    
                                         <a class="nftmax-sidebar_btn nftmax-heading__tabs nav-link "   href="{{ route('time_tracker.create') }}" role="button" aria-expanded="false"><button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius nftmax-item__btn" type="submit">New register</button></a>
-                                    
+                                    @endcan                                
                                 </ul>
                             </div>
                             <div class="tab-content" id="myTabContent">
