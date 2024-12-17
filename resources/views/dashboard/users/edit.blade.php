@@ -68,7 +68,7 @@
                                                         </div>
                                                         <div class="nftmax-ptabs__sauthor">
                                                             <div class="nftmax-ptabs__sauthor-img nftmax-ptabs__pthumb">
-                                                                <img style="width: 62px; height: 62px; border-radius:50%;" class="object-fit-cover" src="{{ asset('storage/users/'.$user->photo) }}" alt="#">
+                                                                <img style="width: 62px; height: 62px; border-radius:50%; object-fit:cover;"  src="{{ asset('storage/users/'.$user->photo) }}" alt="#">
                                                             </div>
                                                         </div>
                                                     </div>	
