@@ -41,7 +41,7 @@
                                                             </div>
                                                             <div class="nftmax-table__product-content">
                                                                 <h4 class="nftmax-table__product-title">{{ $user->full_name }}</h4>
-                                                                <p class="nftmax-table__product-desc">Role <a href="#">{{ $user->getRoleNames()[0] }}</a></p>
+                                                                <p class="nftmax-table__product-desc text-capitalize">Role <a href="#">{{ $user->getRoleNames()[0] }}</a></p>
                                                                 <p class="nftmax-table__product-desc">Created at <a href="#">{{ $user->created_at->format('F j, Y') }}</a></p>
                                                             </div>
                                                         </div>
