@@ -37,7 +37,7 @@
                                                     <td class="nftmax-table__column-1 nftmax-table__data-1">
                                                         <div class="nftmax-table__product">
                                                             <div class="nftmax-table__product-img">
-                                                                <img src="{{ asset('storage/users/'.$user->photo) }}" style="object-fit: cover" alt="#">
+                                                                <img src="{{ asset('storage/users/'.$user->photo) }}" style="object-fit: cover; max-height:45px;" alt="#">
                                                             </div>
                                                             <div class="nftmax-table__product-content">
                                                                 <h4 class="nftmax-table__product-title">{{ $user->full_name }}</h4>
