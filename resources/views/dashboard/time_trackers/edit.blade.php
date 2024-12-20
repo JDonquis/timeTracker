@@ -2,10 +2,32 @@
 
 @section('styles')
 <style>
-    .nftmax-table__body tr td{
-        text-align: start;
-        width: 10%;
-    }
+    .nftmax-table__body tr td {
+                text-align: start;
+                width: 10%;
+            }
+
+            .nftmax__item{
+                width: min( 1200px, 100% ) 
+            }
+
+            table{
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+            th,
+            td{
+                padding: 0.75rem !important;
+            }
+
+            th{
+                text-align: left !important;
+            }
+
+            .table-container{
+                max-width: 100%;
+                overflow-x: scroll;
+            }
 </style>
 @endsection
 
@@ -31,59 +53,82 @@
         @can('update-time_tracker')
             <button class="btn btn-primary" type="button" id="generate-table-btn">Generate</button>
         @endcan
-
-        <table>
-            <!-- NFTMax Table Head -->
-            <thead>
-                <tr id="tr-head-table">
-                    <th>Dates</th>
-                    @foreach ($typeHours as $typeHour)
-                        <th data-id="{{ $typeHour->id }}">{{ $typeHour->name }}</th>
-                    @endforeach
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <!-- NFTMax Table Body -->
-            <tbody class="nftmax-table__body text-start" id="table-tbody-registers">
-                @php
-                    $formData = session('formData', []);
-                        
-                @endphp
-
-                @if(empty($formData))
+        <div class="table-container">
+            <table>
+                <!-- NFTMax Table Head -->
+                <thead>
+                    <tr id="tr-head-table">
+                        <th>Dates</th>
+                        @foreach ($typeHours as $typeHour)
+                            <th data-id="{{ $typeHour->id }}">{{ $typeHour->name }}</th>
+                        @endforeach
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <!-- NFTMax Table Body -->
+                <tbody class="nftmax-table__body text-start" id="table-tbody-registers">
                     @php
-                        
-                        $details = $timeTracker->timeTrackerDetails->toArray();
-                        $uniqueDates = array_unique(array_column( $details ,'date'));
+                        $formData = session('formData', []);
+                            
                     @endphp
 
-                    @foreach ($uniqueDates as $register)
-                    <tr>
-
-                        <td>{{ Carbon::parse($register)->format('d/m/Y'); }}</td>
-
+                    @if(empty($formData))
                         @php
-                        
-                            $filteredRecords = array_filter($details, function($record) use ($register) {
-                                return $record['date'] === $register;
-                            });
-
-                            usort($filteredRecords, function($a, $b) {
-                                return $a['type_hour_id'] <=> $b['type_hour_id'];
-                            });
-                        
+                            
+                            $details = $timeTracker->timeTrackerDetails->toArray();
+                            $uniqueDates = array_unique(array_column( $details ,'date'));
                         @endphp
+
+                        @foreach ($uniqueDates as $register)
+                        <tr>
+
+                            <td>{{ Carbon::parse($register)->format('d/m/Y'); }}</td>
+
+                            @php
+                            
+                                $filteredRecords = array_filter($details, function($record) use ($register) {
+                                    return $record['date'] === $register;
+                                });
+
+                                usort($filteredRecords, function($a, $b) {
+                                    return $a['type_hour_id'] <=> $b['type_hour_id'];
+                                });
+                            
+                            @endphp
+                            
+                            @foreach ($filteredRecords as $registerByHour )
+                                <td>
+                                    <input type="number" name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]" value="{{ $registerByHour['hours'] }}" min="0" style="width: 50px;" onchange="calculateTotalHours()">
+                                </td>    
+                            @endforeach
+                            
+                            <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' class="total-row" value="0" readonly  style='width:50px;'></td>
                         
-                        @foreach ($filteredRecords as $registerByHour )
-                            <td>
-                                <input type="number" name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]" value="{{ $registerByHour['hours'] }}" min="0" style="width: 50px;" onchange="calculateTotalHours()">
-                            </td>    
+                        </tr>
+                            
                         @endforeach
-                        
-                        <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' class="total-row" value="0" readonly  style='width:50px;'></td>
+
+                        <tr>
+                            <td class='nftmax-table__column-1 nftmax-table__data-1'>Total</td>
+                            @foreach ($typeHours as $typeHour )
+                                <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' value="0" readonly style='width:50px;' class='column-total'></td>
+                            @endforeach
+                            <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' value="0" readonly id='total-general' style='width:50px;'></td>
+
+                        </tr>
                     
-                    </tr>
-                        
+                    @else
+                        @foreach ($formData as $row)
+                        <tr>
+                            <td>{{ $row['date'] }}</td>
+                            @foreach ($row['hours'] as $hour)
+                                <td>
+                                    <input type="number" name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]" value="{{ $hour['value'] }}" min="0" style="width: 50px;" onchange="calculateTotalHours()">
+                                </td>
+                            @endforeach
+                            <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' class="total-row" value="0" readonly  style='width:50px;'></td>
+
+                        </tr>
                     @endforeach
 
                     <tr>
@@ -94,37 +139,15 @@
                         <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' value="0" readonly id='total-general' style='width:50px;'></td>
 
                     </tr>
-                
-                @else
-                    @foreach ($formData as $row)
-                    <tr>
-                        <td>{{ $row['date'] }}</td>
-                        @foreach ($row['hours'] as $hour)
-                            <td>
-                                <input type="number" name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]" value="{{ $hour['value'] }}" min="0" style="width: 50px;" onchange="calculateTotalHours()">
-                            </td>
-                        @endforeach
-                        <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' class="total-row" value="0" readonly  style='width:50px;'></td>
-
-                    </tr>
-                @endforeach
-
-                <tr>
-                    <td class='nftmax-table__column-1 nftmax-table__data-1'>Total</td>
-                    @foreach ($typeHours as $typeHour )
-                        <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' value="0" readonly style='width:50px;' class='column-total'></td>
-                    @endforeach
-                    <td class='nftmax-table__column-1 nftmax-table__data-1'><input type='number' value="0" readonly id='total-general' style='width:50px;'></td>
-
-                </tr>
-                
-                @endif
                     
-                
+                    @endif
+                        
+                    
 
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </div>
+        
         <textarea name="comment" id="comment" class="w-100" style="height: 100px;" cols="10" rows="10">{{ session('comment', $timeTracker->comment) }}</textarea>
 
         

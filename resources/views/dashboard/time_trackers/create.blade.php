@@ -6,6 +6,29 @@
                 text-align: start;
                 width: 10%;
             }
+
+            .nftmax__item{
+                width: min( 1200px, 100% ) 
+            }
+
+            table{
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+            th,
+            td{
+                padding: 0.75rem !important;
+            }
+
+            th{
+                text-align: left !important;
+            }
+
+            .table-container{
+                max-width: 100%;
+                overflow-x: scroll;
+            }
+            
         </style>
     @endsection
 
@@ -25,40 +48,40 @@
                     @if (!session('first_date')) disabled @endif>
 
                 <button class="btn btn-primary" type="button" disabled id="generate-table-btn">Generate</button>
-
-                <table>
-                    <!-- NFTMax Table Head -->
-                    <thead>
-                        <tr id="tr-head-table">
-                            <th>Dates</th>
-                            @foreach ($typeHours as $typeHour)
-                                <th data-id="{{ $typeHour->id }}">{{ $typeHour->name }}</th>
-                            @endforeach
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody class="nftmax-table__body text-start" id="table-tbody-registers">
-                        @php
-                            $formData = session('formData', []);
-
-                        @endphp
-
-                        @foreach ($formData as $row)
-                            <tr>
-                                <td>{{ $row['date'] }}</td>
-                                @foreach ($row['hours'] as $hour)
-                                    <td>
-                                        <input type="number"
-                                            name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]"
-                                            value="{{ $hour['value'] }}" min="0" style="width: 50px;">
-                                    </td>
+                <div class="table-container">
+                    <table >
+                        <!-- NFTMax Table Head -->
+                        <thead>
+                            <tr id="tr-head-table">
+                                <th class="custom-th">Dates</th>
+                                @foreach ($typeHours as $typeHour)
+                                    <th class="custom-th" data-id="{{ $typeHour->id }}">{{ $typeHour->name }}</th>
                                 @endforeach
-                                <td><input type="number" value="0" readonly id="total-row" style="width: 50px;"></td>
+                                <th class="custom-th">Total</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="nftmax-table__body text-start" id="table-tbody-registers">
+                            @php
+                                $formData = session('formData', []);
 
+                            @endphp
+
+                            @foreach ($formData as $row)
+                                <tr>
+                                    <td>{{ $row['date'] }}</td>
+                                    @foreach ($row['hours'] as $hour)
+                                        <td>
+                                            <input type="number"
+                                                name="rows[{{ $loop->parent->index }}][hours][{{ $loop->index }}][value]"
+                                                value="{{ $hour['value'] }}" min="0" style="width: 50px;">
+                                        </td>
+                                    @endforeach
+                                    <td><input type="number" value="0" readonly id="total-row" style="width: 50px;"></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <textarea name="comment" id="comment" class="w-100" style="height: 100px;" cols="10" rows="10">{{ session('comment', 'Nothing to add') }}</textarea>
 
 
